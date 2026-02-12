@@ -1,0 +1,142 @@
+.wrapper {
+  position: relative;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 8px;
+  background: var(--coh-bg-card);
+  border: 1px solid transparent;
+  border-radius: var(--coh-border-radius);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.card:hover:not(:disabled) {
+  background: var(--coh-bg-card-hover);
+  border-color: var(--coh-border-light);
+}
+
+.card.picked {
+  background: rgba(0, 191, 255, 0.08);
+  border-color: var(--coh-accent-blue);
+  cursor: default;
+}
+
+.card.unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--coh-bg-primary);
+  border: 1px solid var(--coh-border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.iconImg {
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+
+.name {
+  font-size: 0.8rem;
+  color: var(--coh-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  font-size: 0.65rem;
+}
+
+.type {
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.level {
+  color: var(--coh-text-muted);
+}
+
+.checkmark {
+  color: var(--coh-accent-blue);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* Tooltip */
+.tooltip {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 0;
+  z-index: 100;
+  width: 260px;
+  padding: 12px;
+  background: var(--coh-bg-secondary);
+  border: 1px solid var(--coh-accent-blue);
+  border-radius: var(--coh-border-radius-lg);
+  box-shadow: var(--coh-glow-blue), 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: fade-in 0.15s ease-out;
+  pointer-events: none;
+}
+
+.tooltipTitle {
+  font-family: var(--coh-font-heading);
+  font-size: 1rem;
+  color: var(--coh-accent-blue);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.tooltipDesc {
+  font-size: 0.75rem;
+  color: var(--coh-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.tooltipStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-family: var(--coh-font-mono);
+  font-size: 0.7rem;
+  color: var(--coh-text-muted);
+  padding-top: 6px;
+  border-top: 1px solid var(--coh-border);
+}
+
+.tooltipEffects {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--coh-border);
+}
+
+.tooltipEffect {
+  font-size: 0.7rem;
+  color: var(--coh-accent-gold);
+}

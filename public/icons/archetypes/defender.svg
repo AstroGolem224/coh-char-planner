@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <circle cx="32" cy="32" r="28" stroke="#2e7d32" stroke-width="2" fill="#1a1f3a"/>
+  <!-- Cross / plus symbol (healing) -->
+  <rect x="27" y="14" width="10" height="36" rx="2" fill="#2e7d32" opacity="0.9"/>
+  <rect x="14" y="27" width="36" height="10" rx="2" fill="#2e7d32" opacity="0.9"/>
+  <!-- Inner cross -->
+  <rect x="29" y="18" width="6" height="28" rx="1" fill="#66bb6a"/>
+  <rect x="18" y="29" width="28" height="6" rx="1" fill="#66bb6a"/>
+  <!-- Center glow -->
+  <circle cx="32" cy="32" r="3" fill="#a5d6a7"/>
+</svg>

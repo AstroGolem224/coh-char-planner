@@ -1,0 +1,15 @@
+.shell {
+  display: grid;
+  grid-template-rows: var(--coh-header-height) 1fr;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--coh-bg-primary);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: var(--coh-left-panel-width) 1fr var(--coh-right-panel-width);
+  gap: var(--coh-panel-gap);
+  padding: var(--coh-panel-gap);
+  overflow: hidden;
+}

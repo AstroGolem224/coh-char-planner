@@ -1,0 +1,219 @@
+{
+  "id": "sentinel-storm-psi-optimal-001",
+  "name": "Storm/Psi Sentinel - Optimal",
+  "archetypeId": "sentinel",
+  "primaryPowersetId": "storm_blast",
+  "secondaryPowersetId": "psi_armor",
+  "poolPowersetIds": [],
+  "powerPicks": [
+    {
+      "powerId": "storm_gust",
+      "powersetId": "storm_blast",
+      "levelPicked": 1,
+      "slottedEnhancements": [
+        { "enhancementId": "so_accuracy", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 3, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_mental_fortitude",
+      "powersetId": "psi_armor",
+      "levelPicked": 1,
+      "slottedEnhancements": [
+        { "enhancementId": "lotg_def", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "lotg_def_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "lotg_def_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "lotg_def_end_rech", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "lotg_rech_proc", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_lightning_bolt",
+      "powersetId": "storm_blast",
+      "levelPicked": 2,
+      "slottedEnhancements": [
+        { "enhancementId": "ts_acc_dmg", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "ts_dmg_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "ts_dmg_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_rech", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_end", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_mind_over_body",
+      "powersetId": "psi_armor",
+      "levelPicked": 4,
+      "slottedEnhancements": [
+        { "enhancementId": "ae_res", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "ae_res_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "ae_res_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "ae_end_rech", "slotIndex": 3, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_hailstones",
+      "powersetId": "storm_blast",
+      "levelPicked": 6,
+      "slottedEnhancements": [
+        { "enhancementId": "so_accuracy", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_psionic_shield",
+      "powersetId": "psi_armor",
+      "levelPicked": 8,
+      "slottedEnhancements": [
+        { "enhancementId": "lotg_def", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "lotg_def_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "lotg_def_rech", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_snow_storm",
+      "powersetId": "storm_blast",
+      "levelPicked": 10,
+      "slottedEnhancements": [
+        { "enhancementId": "so_accuracy", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 4, "level": 50 },
+        { "enhancementId": "so_accuracy", "slotIndex": 5, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_indomitable_will",
+      "powersetId": "psi_armor",
+      "levelPicked": 12,
+      "slottedEnhancements": [
+        { "enhancementId": "so_endurance", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_defense", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_defense", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_chain_lightning",
+      "powersetId": "storm_blast",
+      "levelPicked": 14,
+      "slottedEnhancements": [
+        { "enhancementId": "ts_acc_dmg", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "ts_dmg_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "ts_dmg_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_rech", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_end", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_concentration",
+      "powersetId": "psi_armor",
+      "levelPicked": 16,
+      "slottedEnhancements": [
+        { "enhancementId": "so_recharge", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_intensify",
+      "powersetId": "storm_blast",
+      "levelPicked": 18,
+      "slottedEnhancements": [
+        { "enhancementId": "so_recharge", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_psychic_resistance",
+      "powersetId": "psi_armor",
+      "levelPicked": 20,
+      "slottedEnhancements": [
+        { "enhancementId": "ae_res", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "ae_res_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "ae_res_rech", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_thunderclap",
+      "powersetId": "storm_blast",
+      "levelPicked": 22,
+      "slottedEnhancements": [
+        { "enhancementId": "so_accuracy", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_stun", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_insight",
+      "powersetId": "psi_armor",
+      "levelPicked": 24,
+      "slottedEnhancements": [
+        { "enhancementId": "lotg_def", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "lotg_def_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "lotg_def_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "lotg_rech_proc", "slotIndex": 3, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_tornado",
+      "powersetId": "storm_blast",
+      "levelPicked": 26,
+      "slottedEnhancements": [
+        { "enhancementId": "so_accuracy", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_damage", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 4, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 5, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_psionic_mastery",
+      "powersetId": "psi_armor",
+      "levelPicked": 28,
+      "slottedEnhancements": [
+        { "enhancementId": "so_resistance", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_resistance", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 2, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "storm_thunder_strike",
+      "powersetId": "storm_blast",
+      "levelPicked": 30,
+      "slottedEnhancements": [
+        { "enhancementId": "ts_acc_dmg", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "ts_dmg_end", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "ts_dmg_rech", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_rech", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "ts_acc_dmg_end", "slotIndex": 4, "level": 50 }
+      ]
+    },
+    {
+      "powerId": "psi_psi_absorption",
+      "powersetId": "psi_armor",
+      "levelPicked": 32,
+      "slottedEnhancements": [
+        { "enhancementId": "so_heal", "slotIndex": 0, "level": 50 },
+        { "enhancementId": "so_heal", "slotIndex": 1, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 2, "level": 50 },
+        { "enhancementId": "so_recharge", "slotIndex": 3, "level": 50 },
+        { "enhancementId": "so_endurance", "slotIndex": 4, "level": 50 }
+      ]
+    }
+  ],
+  "slotAssignments": [],
+  "level": 50,
+  "notes": "Optimal Storm Blast / Psi Armor Sentinel build. Prioritizes Thunderstrike and LotG IO sets for recharge and defense bonuses. Storm Blast provides strong AoE and single target with -DEF debuffs. Psi Armor covers defense and resistance with strong psionic protection. Key strategy: perma-Intensify through recharge bonuses, layered defense from LotG sets in Psi Armor toggles, solid resistance from Aegis sets in Mind Over Body/Psychic Resistance.",
+  "createdAt": "2026-02-12T00:00:00.000Z",
+  "updatedAt": "2026-02-12T00:00:00.000Z",
+  "version": 1
+}

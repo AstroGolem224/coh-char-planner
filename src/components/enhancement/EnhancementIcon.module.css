@@ -1,0 +1,54 @@
+.icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  font-family: var(--coh-font-mono);
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.icon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.icon:hover {
+  transform: scale(1.15);
+  z-index: 1;
+  box-shadow: 0 0 8px var(--enh-color, rgba(255, 255, 255, 0.3));
+}
+
+.set {
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--coh-bg-primary);
+  border: 1px solid var(--coh-border-light);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: var(--coh-text-primary);
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}

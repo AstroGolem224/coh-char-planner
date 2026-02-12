@@ -1,0 +1,150 @@
+@import '@fontsource/oswald/400.css';
+@import '@fontsource/oswald/700.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
+
+:root {
+  /* Base dark theme */
+  --coh-bg-primary: #0a0e27;
+  --coh-bg-secondary: #1a1f3a;
+  --coh-bg-panel: #141830;
+  --coh-bg-card: #1e2347;
+  --coh-bg-card-hover: #252b54;
+  --coh-border: #2a3060;
+  --coh-border-light: #3a4080;
+
+  /* Accent colors */
+  --coh-accent-blue: #00bfff;
+  --coh-accent-blue-light: #4fc3f7;
+  --coh-accent-blue-dark: #0088cc;
+  --coh-accent-gold: #ffd700;
+  --coh-accent-gold-dark: #ffab00;
+  --coh-accent-red: #ff1744;
+  --coh-accent-green: #00e676;
+
+  /* Text */
+  --coh-text-primary: #e8eaf6;
+  --coh-text-secondary: #9fa8da;
+  --coh-text-muted: #5c6bc0;
+  --coh-text-bright: #ffffff;
+
+  /* Glow effects */
+  --coh-glow-blue: 0 0 10px rgba(0, 191, 255, 0.3), 0 0 20px rgba(0, 191, 255, 0.1);
+  --coh-glow-blue-strong: 0 0 10px rgba(0, 191, 255, 0.5), 0 0 30px rgba(0, 191, 255, 0.2), 0 0 50px rgba(0, 191, 255, 0.1);
+  --coh-glow-gold: 0 0 10px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.1);
+  --coh-glow-red: 0 0 10px rgba(255, 23, 68, 0.3), 0 0 20px rgba(255, 23, 68, 0.1);
+
+  /* Enhancement rarity colors */
+  --coh-rarity-training: #cccccc;
+  --coh-rarity-do: #cccc00;
+  --coh-rarity-so: #00aa00;
+  --coh-rarity-io: #dd8800;
+  --coh-rarity-rare: #ee8800;
+  --coh-rarity-very-rare: #9933cc;
+  --coh-rarity-pvp: #00cccc;
+  --coh-rarity-ato: #cc3333;
+
+  /* Damage type colors */
+  --coh-dmg-smashing: #aa8855;
+  --coh-dmg-lethal: #aaaaaa;
+  --coh-dmg-fire: #dd4400;
+  --coh-dmg-cold: #66bbee;
+  --coh-dmg-energy: #ddaa00;
+  --coh-dmg-negative: #7744bb;
+  --coh-dmg-psionic: #9955cc;
+  --coh-dmg-toxic: #44aa00;
+
+  /* Typography */
+  --coh-font-heading: 'Oswald', 'Impact', sans-serif;
+  --coh-font-body: 'Roboto', 'Segoe UI', sans-serif;
+  --coh-font-mono: 'Roboto Mono', 'Consolas', monospace;
+
+  /* Spacing */
+  --coh-panel-gap: 8px;
+  --coh-card-padding: 12px;
+  --coh-border-radius: 4px;
+  --coh-border-radius-lg: 8px;
+
+  /* Layout */
+  --coh-header-height: 56px;
+  --coh-left-panel-width: 280px;
+  --coh-right-panel-width: 320px;
+}
+
+/* Villain theme override */
+[data-theme="villain"] {
+  --coh-accent-blue: #ff1744;
+  --coh-accent-blue-light: #ff5252;
+  --coh-accent-blue-dark: #c41234;
+  --coh-glow-blue: 0 0 10px rgba(255, 23, 68, 0.3), 0 0 20px rgba(255, 23, 68, 0.1);
+  --coh-glow-blue-strong: 0 0 10px rgba(255, 23, 68, 0.5), 0 0 30px rgba(255, 23, 68, 0.2);
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--coh-font-body);
+  background-color: var(--coh-bg-primary);
+  color: var(--coh-text-primary);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--coh-font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+a {
+  color: var(--coh-accent-blue);
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--coh-font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+select {
+  font-family: var(--coh-font-body);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--coh-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--coh-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--coh-border-light);
+}

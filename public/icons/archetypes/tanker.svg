@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <circle cx="32" cy="32" r="28" stroke="#1565c0" stroke-width="2" fill="#1a1f3a"/>
+  <!-- Shield shape -->
+  <path d="M32 12 L48 20 L48 36 C48 46 40 52 32 56 C24 52 16 46 16 36 L16 20 Z" fill="#1565c0" opacity="0.9"/>
+  <path d="M32 18 L42 24 L42 35 C42 42 37 47 32 50 C27 47 22 42 22 35 L22 24 Z" fill="#1a1f3a"/>
+  <path d="M32 24 L36 28 L36 36 C36 39 34 42 32 44 C30 42 28 39 28 36 L28 28 Z" fill="#4fc3f7"/>
+</svg>

@@ -1,0 +1,107 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: linear-gradient(180deg, #1a1f3a 0%, #141830 100%);
+  border-bottom: 1px solid var(--coh-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--coh-font-heading);
+  text-transform: uppercase;
+}
+
+.logoSub {
+  font-size: 1rem;
+  color: var(--coh-accent-blue);
+  letter-spacing: 3px;
+  font-weight: 400;
+}
+
+.logoMain {
+  font-size: 1.5rem;
+  color: var(--coh-text-bright);
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
+  letter-spacing: 2px;
+}
+
+.buildInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.archetype {
+  font-family: var(--coh-font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.buildNameInput {
+  font-family: var(--coh-font-heading);
+  font-size: 1.1rem;
+  color: var(--coh-accent-gold);
+  letter-spacing: 1px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--coh-border-radius);
+  padding: 2px 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 180px;
+}
+
+.buildNameInput:hover {
+  border-color: var(--coh-border);
+}
+
+.buildNameInput:focus {
+  border-color: var(--coh-accent-gold);
+  background: var(--coh-bg-card);
+}
+
+.buildLevel {
+  font-size: 0.85rem;
+  color: var(--coh-text-muted);
+  background: var(--coh-bg-card);
+  padding: 4px 10px;
+  border-radius: var(--coh-border-radius);
+  border: 1px solid var(--coh-border);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionBtn {
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--coh-text-secondary);
+  background: var(--coh-bg-card);
+  border: 1px solid var(--coh-border);
+  border-radius: var(--coh-border-radius);
+  transition: all 0.2s ease;
+}
+
+.actionBtn:hover {
+  color: var(--coh-text-bright);
+  border-color: var(--coh-accent-blue);
+  box-shadow: var(--coh-glow-blue);
+}
+
+.saveFlash {
+  border-color: var(--coh-accent-gold) !important;
+  color: var(--coh-accent-gold) !important;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+}
