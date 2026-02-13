@@ -1,7 +1,7 @@
 export type PowersetType = 'primary' | 'secondary' | 'pool' | 'epic';
 export type PowerType = 'toggle' | 'click' | 'auto' | 'passive';
 export type DamageType = 'smashing' | 'lethal' | 'fire' | 'cold' | 'energy' | 'negative' | 'toxic' | 'psionic';
-export type EffectType = 'damage' | 'heal' | 'buff' | 'debuff' | 'control' | 'pet' | 'movement' | 'shield' | 'defense' | 'defense_buff' | 'defense_debuff' | 'to_hit_buff' | 'to_hit_debuff' | 'resistance';
+export type EffectType = 'damage' | 'heal' | 'buff' | 'debuff' | 'control' | 'pet' | 'movement' | 'shield' | 'defense' | 'defense_debuff' | 'resistance' | 'to_hit_buff' | 'to_hit_debuff';
 
 export type EnhancementCategory =
   | 'accuracy' | 'damage' | 'recharge' | 'endurance_reduction'
@@ -48,5 +48,6 @@ export interface Powerset {
   icon: string;
   powers: Power[];
 }
+
 
 
