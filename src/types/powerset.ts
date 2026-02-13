@@ -9,12 +9,14 @@ export type EnhancementCategory =
   | 'heal' | 'hold' | 'immobilize' | 'stun' | 'slow'
   | 'knockback' | 'taunt' | 'to_hit_buff' | 'to_hit_debuff'
   | 'run_speed' | 'fly_speed' | 'jump' | 'fear' | 'confuse'
-  | 'sleep' | 'endurance_modification' | 'resistanceType' | 'defenseType';
+  | 'sleep' | 'endurance_modification';
 
 export interface PowerEffect {
   type: EffectType;
   target: 'self' | 'ally' | 'enemy' | 'aoe' | 'pet';
   damageType?: DamageType;
+  resistanceType?: DamageType;
+  defenseType?: DamageType | 'melee' | 'ranged' | 'aoe';
   value: number;
   duration?: number;
   description: string;
@@ -48,7 +50,3 @@ export interface Powerset {
   icon: string;
   powers: Power[];
 }
-
-
-
-
