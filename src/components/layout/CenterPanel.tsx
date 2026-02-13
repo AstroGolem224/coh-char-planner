@@ -9,10 +9,11 @@ import styles from './CenterPanel.module.css'
 export default function CenterPanel() {
   const build = useBuildStore((s) => s.currentBuild)
   const removePower = useBuildStore((s) => s.removePower)
+  const togglePowerActive = useBuildStore((s) => s.togglePowerActive)
   const openPicker = useUIStore((s) => s.openEnhancementPicker)
 
   // Map power picks by their index in the pick sequence
-  const picksByIndex = new Map<number, { powerId: string; powersetId: string; powerName: string; powersetName: string; slottedEnhancements: { enhancementId: string; slotIndex: number }[] }>();
+  const picksByIndex = new Map<number, { powerId: string; powersetId: string; powerName: string; powersetName: string; slottedEnhancements: { enhancementId: string; slotIndex: number }[]; isActive: boolean }>();
   if (build) {
     const sorted = [...build.powerPicks].sort((a, b) => a.levelPicked - b.levelPicked);
     let slotIdx = 0;
@@ -29,6 +30,7 @@ export default function CenterPanel() {
           powerName: power?.name || pick.powerId,
           powersetName: powerset?.name || '',
           slottedEnhancements: pick.slottedEnhancements,
+          isActive: pick.isActive !== false,
         });
         slotIdx++;
       }
@@ -50,17 +52,17 @@ export default function CenterPanel() {
             return (
               <div
                 key={i}
-                className={`${styles.row} ${pick ? styles.filled : ''}`}
+                className={`${styles.row} ${pick ? styles.filled : ''} ${pick && !pick.isActive ? styles.inactive : ''}`}
               >
                 <span
                   className={styles.level}
-                  onClick={() => pick && removePower(level)}
+                  onClick={() => pick && removePower(pick.powerId)}
                   title={pick ? 'Click to remove power' : undefined}
                   style={pick ? { cursor: 'pointer' } : undefined}
                 >
                   {level}
                 </span>
-                <div className={styles.powerSlot}>
+                <div className={styles.powerInfo}>
                   {pick ? (
                     <>
                       <span className={styles.powerName}>{pick.powerName}</span>
@@ -70,32 +72,44 @@ export default function CenterPanel() {
                     <span className={styles.emptyLabel}>Empty</span>
                   )}
                 </div>
-                <div className={styles.enhSlots}>
-                  {Array.from({ length: pick ? 6 : 1 }, (_, j) => {
-                    const slotted = pick?.slottedEnhancements.find((se) => se.slotIndex === j);
-                    const enhancement = slotted ? getEnhancementById(slotted.enhancementId) : null;
+                {pick && (
+                  <button
+                    className={`${styles.toggleBtn} ${pick.isActive ? styles.toggleOn : styles.toggleOff}`}
+                    onClick={() => togglePowerActive(pick.powerId)}
+                    title={pick.isActive ? 'Disable power' : 'Enable power'}
+                  >
+                    {pick.isActive ? 'ON' : 'OFF'}
+                  </button>
+                )}
+                {pick && (
+                  <div className={styles.enhSlots}>
+                    {Array.from({ length: 6 }, (_, j) => {
+                      const slotted = pick.slottedEnhancements.find((se) => se.slotIndex === j);
+                      const enhancement = slotted ? getEnhancementById(slotted.enhancementId) : null;
 
-                    if (enhancement) {
+                      if (enhancement) {
+                        return (
+                          <EnhancementIcon
+                            key={j}
+                            enhancement={enhancement}
+                            onClick={() => openPicker(pick.powerId, j)}
+                          />
+                        );
+                      }
+
                       return (
-                        <EnhancementIcon
+                        <div
                           key={j}
-                          enhancement={enhancement}
-                          onClick={() => openPicker(pick!.powerId, j)}
-                        />
+                          className={styles.emptySlot}
+                          onClick={() => openPicker(pick.powerId, j)}
+                          title="Click to slot enhancement"
+                        >
+                          0
+                        </div>
                       );
-                    }
-
-                    return (
-                      <div
-                        key={j}
-                        className={`${styles.enhSlot} ${j === 0 && pick ? styles.enhSlotBase : ''}`}
-                        onClick={() => pick && openPicker(pick.powerId, j)}
-                        style={pick ? { cursor: 'pointer' } : undefined}
-                        title={pick ? 'Click to slot enhancement' : undefined}
-                      />
-                    );
-                  })}
-                </div>
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}

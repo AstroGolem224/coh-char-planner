@@ -1,7 +1,7 @@
-import type { Build } from '../types';
+import type { Build, SlottedEnhancement } from '../types';
+import type { EnhancementCategory } from '../types/powerset';
 import { getPowersetById } from '../data';
 import { getEnhancementById, enhancementSets } from '../data/enhancements';
-import { archetypes } from '../data/archetypes';
 
 export interface StatBlock {
   defense: {
@@ -43,7 +43,6 @@ function emptyStats(): StatBlock {
   };
 }
 
-// Map set bonus stat names to our StatBlock paths
 function applySetBonusStat(stats: StatBlock, stat: string, value: number) {
   switch (stat) {
     case 'accuracy': stats.general.accuracy += value; break;
@@ -72,50 +71,146 @@ function applySetBonusStat(stats: StatBlock, stat: string, value: number) {
   }
 }
 
+const defenseTypes = new Set(['smashing', 'lethal', 'fire', 'cold', 'energy', 'negative', 'psionic', 'melee', 'ranged', 'aoe']);
+const resistanceTypes = new Set(['smashing', 'lethal', 'fire', 'cold', 'energy', 'negative', 'psionic']);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyEffect = Record<string, any>;
+
+/** Extract the relevant type key from an effect (handles damageType, defenseType, resistanceType) */
+function getEffectSubtype(effect: AnyEffect): string | undefined {
+  return effect.damageType || effect.defenseType || effect.resistanceType;
+}
+
+/** Check if an effect is a stat-modifying effect (defense, resistance, or general buff) */
+function isStatEffect(effect: AnyEffect): boolean {
+  const t = effect.type;
+  return t === 'shield' || t === 'buff' || t === 'defense' || t === 'resistance';
+}
+
+/** Determine which enhancement categories boost a given power effect */
+function getBoostingCategories(effect: AnyEffect): EnhancementCategory[] {
+  if (!isStatEffect(effect)) return [];
+
+  const t = effect.type;
+  const desc = (effect.description || '').toLowerCase();
+  const categories: EnhancementCategory[] = [];
+
+  if (t === 'resistance' || (desc.includes('res') && !desc.includes('restore'))) {
+    categories.push('resistance');
+  }
+  if (t === 'defense' || desc.includes('def')) {
+    categories.push('defense_buff');
+  }
+  if (desc.includes('regen') || desc.includes('max hp') || desc.includes('maxhp') || desc.includes('hit point')) {
+    categories.push('heal');
+  }
+  if (desc.includes('recovery')) {
+    categories.push('endurance_modification');
+  }
+
+  return categories;
+}
+
+/** Calculate the enhancement multiplier from slotted IOs for a given effect */
+function getEnhancementMultiplier(
+  boostingCategories: EnhancementCategory[],
+  slottedEnhancements: SlottedEnhancement[],
+): number {
+  if (boostingCategories.length === 0) return 1;
+
+  let totalBonus = 0;
+  for (const slot of slottedEnhancements) {
+    const enh = getEnhancementById(slot.enhancementId);
+    if (!enh) continue;
+    for (const cat of enh.categories) {
+      if (boostingCategories.includes(cat)) {
+        totalBonus += enh.bonusPercentage;
+        break; // count each enhancement once per effect
+      }
+    }
+  }
+
+  return 1 + (totalBonus / 100);
+}
+
+function applyPowerEffect(
+  stats: StatBlock,
+  effect: AnyEffect,
+  multiplier: number,
+) {
+  if (!isStatEffect(effect)) return;
+
+  const desc = (effect.description || '').toLowerCase();
+  const val = effect.value * multiplier;
+  const t = effect.type;
+  const dmg = getEffectSubtype(effect);
+
+  // Defense effects
+  const isDef = t === 'defense' || desc.includes('def');
+  if (isDef) {
+    if (dmg && defenseTypes.has(dmg)) {
+      (stats.defense as Record<string, number>)[dmg] += val;
+    }
+    // Positional defense from description
+    if (desc.includes('melee') && dmg !== 'melee') stats.defense.melee += val;
+    if (desc.includes('ranged') && dmg !== 'ranged') stats.defense.ranged += val;
+    if (desc.includes('aoe') && dmg !== 'aoe') stats.defense.aoe += val;
+    // "All type DEF" or "All DEF" patterns
+    if (desc.includes('all') && !dmg) {
+      for (const dt of defenseTypes) {
+        (stats.defense as Record<string, number>)[dt] += val;
+      }
+    }
+  }
+
+  // Resistance effects
+  const isRes = t === 'resistance' || (desc.includes('res') && !desc.includes('restore'));
+  if (isRes) {
+    if (dmg && resistanceTypes.has(dmg)) {
+      (stats.resistance as Record<string, number>)[dmg] += val;
+    }
+    // "All Resistance" patterns
+    if (desc.includes('all') && !dmg) {
+      for (const rt of resistanceTypes) {
+        (stats.resistance as Record<string, number>)[rt] += val;
+      }
+    }
+  }
+
+  // General stats
+  if (desc.includes('regen')) stats.general.regen += val;
+  if (desc.includes('recovery')) stats.general.recovery += val;
+  if (desc.includes('max hp') || desc.includes('maxhp') || desc.includes('hit point')) stats.general.maxHp += val;
+  if (desc.includes('recharge')) stats.general.recharge += val;
+  if (desc.includes('accuracy') || desc.includes('to-hit') || desc.includes('tohit')) stats.general.accuracy += val;
+  if (desc.includes('damage') && !desc.includes('resistance')) stats.general.damage += val;
+}
+
 export function calculateStats(build: Build): StatBlock {
   const stats = emptyStats();
 
-  // Get base power effects from picked powers
-  for (const pick of build.powerPicks) {
+  // Only include active powers
+  const activePicks = build.powerPicks.filter((pp) => pp.isActive !== false);
+
+  // Apply power effects from active powers, enhanced by slotted IOs
+  for (const pick of activePicks) {
     const powerset = getPowersetById(pick.powersetId);
     if (!powerset) continue;
     const power = powerset.powers.find((p) => p.id === pick.powerId);
     if (!power) continue;
 
     for (const effect of power.effects) {
-      if (effect.type === 'shield' || effect.type === 'buff') {
-        // Map power effects to stats based on damage type and target
-        if (effect.description.toLowerCase().includes('defense')) {
-          const dmg = effect.damageType;
-          if (dmg && dmg in stats.defense) {
-            (stats.defense as Record<string, number>)[dmg] += effect.value;
-          }
-          // Check for positional defense keywords
-          if (effect.description.toLowerCase().includes('melee')) stats.defense.melee += effect.value;
-          if (effect.description.toLowerCase().includes('ranged')) stats.defense.ranged += effect.value;
-          if (effect.description.toLowerCase().includes('aoe')) stats.defense.aoe += effect.value;
-        }
-        if (effect.description.toLowerCase().includes('resistance') && effect.damageType) {
-          const dmg = effect.damageType;
-          if (dmg in stats.resistance) {
-            (stats.resistance as Record<string, number>)[dmg] += effect.value;
-          }
-        }
-        if (effect.description.toLowerCase().includes('regen')) stats.general.regen += effect.value;
-        if (effect.description.toLowerCase().includes('recovery')) stats.general.recovery += effect.value;
-        if (effect.description.toLowerCase().includes('max hp')) stats.general.maxHp += effect.value;
-      }
-      if (effect.type === 'damage') {
-        stats.general.damage += effect.value;
-      }
+      const boostingCategories = getBoostingCategories(effect as AnyEffect);
+      const multiplier = getEnhancementMultiplier(boostingCategories, pick.slottedEnhancements);
+      applyPowerEffect(stats, effect as AnyEffect, multiplier);
     }
   }
 
-  // Calculate set bonuses from slotted IO set enhancements
-  // Count how many enhancements from each set are slotted per power
+  // Calculate IO set bonuses from active powers only
   const setCountsPerPower = new Map<string, Map<string, number>>();
 
-  for (const pick of build.powerPicks) {
+  for (const pick of activePicks) {
     const setCounts = new Map<string, number>();
     for (const slot of pick.slottedEnhancements) {
       const enh = getEnhancementById(slot.enhancementId);
@@ -128,7 +223,7 @@ export function calculateStats(build: Build): StatBlock {
     }
   }
 
-  // Apply set bonuses (each set in each power can grant bonuses once)
+  // Apply set bonuses (these are flat values, not enhanced by slotted IOs)
   for (const [, setCounts] of setCountsPerPower) {
     for (const [setId, count] of setCounts) {
       const enhSet = enhancementSets.find((s) => s.id === setId);

@@ -7,11 +7,14 @@ interface BuildState {
   currentBuild: Build | null;
   savedBuilds: Build[];
 
-  createNewBuild: (archetypeId: string, name?: string) => Build;
+  createNewBuild: (archetypeId: string, name?: string, id?: string) => Build;
   setPrimaryPowerset: (powersetId: string) => void;
   setSecondaryPowerset: (powersetId: string) => void;
+  addPoolPowerset: (powersetId: string) => void;
+  removePoolPowerset: (powersetId: string) => void;
   pickPower: (powerId: string, powersetId: string, level: number) => void;
-  removePower: (level: number) => void;
+  removePower: (powerId: string) => void;
+  togglePowerActive: (powerId: string) => void;
   slotEnhancement: (powerId: string, slotIndex: number, enhancementId: string) => void;
   removeEnhancement: (powerId: string, slotIndex: number) => void;
   updateBuildName: (name: string) => void;
@@ -23,10 +26,10 @@ interface BuildState {
   resetBuild: () => void;
 }
 
-function createEmptyBuild(archetypeId: string, name: string): Build {
+function createEmptyBuild(archetypeId: string, name: string, id?: string): Build {
   const now = new Date().toISOString();
   return {
-    id: uuidv4(),
+    id: id || uuidv4(),
     name,
     archetypeId,
     primaryPowersetId: '',
@@ -48,8 +51,8 @@ export const useBuildStore = create<BuildState>()(
       currentBuild: null,
       savedBuilds: [],
 
-      createNewBuild: (archetypeId: string, name?: string) => {
-        const build = createEmptyBuild(archetypeId, name || 'New Build');
+      createNewBuild: (archetypeId: string, name?: string, id?: string) => {
+        const build = createEmptyBuild(archetypeId, name || 'New Build', id);
         set({ currentBuild: build });
         return build;
       },
@@ -87,6 +90,35 @@ export const useBuildStore = create<BuildState>()(
         });
       },
 
+      addPoolPowerset: (powersetId: string) => {
+        set((state) => {
+          if (!state.currentBuild) return state;
+          const pools = state.currentBuild.poolPowersetIds;
+          if (pools.length >= 4 || pools.includes(powersetId)) return state;
+          return {
+            currentBuild: {
+              ...state.currentBuild,
+              poolPowersetIds: [...pools, powersetId],
+              updatedAt: new Date().toISOString(),
+            },
+          };
+        });
+      },
+
+      removePoolPowerset: (powersetId: string) => {
+        set((state) => {
+          if (!state.currentBuild) return state;
+          return {
+            currentBuild: {
+              ...state.currentBuild,
+              poolPowersetIds: state.currentBuild.poolPowersetIds.filter((id) => id !== powersetId),
+              powerPicks: state.currentBuild.powerPicks.filter((pp) => pp.powersetId !== powersetId),
+              updatedAt: new Date().toISOString(),
+            },
+          };
+        });
+      },
+
       pickPower: (powerId: string, powersetId: string, level: number) => {
         set((state) => {
           if (!state.currentBuild) return state;
@@ -108,15 +140,32 @@ export const useBuildStore = create<BuildState>()(
         });
       },
 
-      removePower: (level: number) => {
+      removePower: (powerId: string) => {
         set((state) => {
           if (!state.currentBuild) return state;
           return {
             currentBuild: {
               ...state.currentBuild,
               powerPicks: state.currentBuild.powerPicks.filter(
-                (pp) => pp.levelPicked !== level
+                (pp) => pp.powerId !== powerId
               ),
+              updatedAt: new Date().toISOString(),
+            },
+          };
+        });
+      },
+
+      togglePowerActive: (powerId: string) => {
+        set((state) => {
+          if (!state.currentBuild) return state;
+          const powerPicks = state.currentBuild.powerPicks.map((pp) => {
+            if (pp.powerId !== powerId) return pp;
+            return { ...pp, isActive: pp.isActive === false ? true : false };
+          });
+          return {
+            currentBuild: {
+              ...state.currentBuild,
+              powerPicks,
               updatedAt: new Date().toISOString(),
             },
           };
@@ -212,9 +261,41 @@ export const useBuildStore = create<BuildState>()(
 
       importBuild: (json: string) => {
         try {
-          const build = JSON.parse(json) as Build;
-          if (!build.id || !build.archetypeId) return false;
-          build.id = uuidv4(); // New ID to avoid conflicts
+          const data = JSON.parse(json);
+          if (
+            typeof data !== 'object' || data === null ||
+            typeof data.archetypeId !== 'string' || !data.archetypeId ||
+            typeof data.name !== 'string' ||
+            typeof data.primaryPowersetId !== 'string' ||
+            typeof data.secondaryPowersetId !== 'string' ||
+            !Array.isArray(data.powerPicks) ||
+            !Array.isArray(data.slotAssignments) ||
+            typeof data.level !== 'number'
+          ) {
+            return false;
+          }
+          const build: Build = {
+            id: uuidv4(),
+            name: data.name || 'Imported Build',
+            archetypeId: data.archetypeId,
+            primaryPowersetId: data.primaryPowersetId,
+            secondaryPowersetId: data.secondaryPowersetId,
+            poolPowersetIds: Array.isArray(data.poolPowersetIds) ? data.poolPowersetIds : [],
+            epicPowersetId: typeof data.epicPowersetId === 'string' ? data.epicPowersetId : undefined,
+            powerPicks: data.powerPicks.filter(
+              (pp: unknown) =>
+                typeof pp === 'object' && pp !== null &&
+                typeof (pp as PowerPick).powerId === 'string' &&
+                typeof (pp as PowerPick).powersetId === 'string' &&
+                typeof (pp as PowerPick).levelPicked === 'number'
+            ),
+            slotAssignments: data.slotAssignments,
+            level: data.level,
+            notes: typeof data.notes === 'string' ? data.notes : '',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            version: typeof data.version === 'number' ? data.version : 1,
+          };
           set({ currentBuild: build });
           return true;
         } catch {

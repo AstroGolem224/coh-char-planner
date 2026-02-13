@@ -41,24 +41,20 @@
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 32px 1fr auto;
+  display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 8px;
+  padding: 5px 8px;
   background: var(--coh-bg-card);
   border: 1px solid transparent;
   border-radius: var(--coh-border-radius);
   transition: all 0.15s ease;
+  min-height: 34px;
 }
 
 .row:hover {
   border-color: var(--coh-border-light);
   background: var(--coh-bg-card-hover);
-}
-
-.row.filled {
-  cursor: pointer;
 }
 
 .row.filled:hover {
@@ -71,28 +67,36 @@
   color: var(--coh-text-muted);
   text-align: center;
   font-weight: 500;
+  width: 28px;
+  flex-shrink: 0;
 }
 
 .row.filled .level {
   color: var(--coh-accent-gold);
 }
 
-.powerSlot {
+.powerInfo {
   display: flex;
-  flex-direction: column;
-  gap: 1px;
-  padding: 2px 0;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
 }
 
 .powerName {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--coh-text-primary);
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .powersetLabel {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: var(--coh-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .emptyLabel {
@@ -105,17 +109,68 @@
 .enhSlots {
   display: flex;
   gap: 3px;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.enhSlot {
-  width: 22px;
-  height: 22px;
-  border: 1px dashed var(--coh-border);
+.emptySlot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(60, 60, 70, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--coh-font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.emptySlot:hover {
+  background: rgba(80, 80, 90, 0.6);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+.row.inactive {
+  opacity: 0.45;
+}
+
+.row.inactive .powerName {
+  text-decoration: line-through;
+}
+
+.toggleBtn {
+  font-family: var(--coh-font-mono);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 5px;
   border-radius: 3px;
-  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
-.enhSlotBase {
-  border-style: solid;
-  border-color: var(--coh-border-light);
+.toggleOn {
+  background: rgba(0, 230, 118, 0.15);
+  border-color: rgba(0, 230, 118, 0.4);
+  color: #00e676;
+}
+
+.toggleOff {
+  background: rgba(255, 82, 82, 0.1);
+  border-color: rgba(255, 82, 82, 0.3);
+  color: #ff5252;
+}
+
+.toggleBtn:hover {
+  transform: scale(1.05);
 }

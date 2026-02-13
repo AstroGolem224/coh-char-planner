@@ -6,7 +6,6 @@ import {
   basicEnhancements,
   enhancementSets,
   categoryLabels,
-  categoryColors,
 } from '../../data/enhancements';
 import type { Enhancement, EnhancementCategory } from '../../types';
 import styles from './EnhancementPicker.module.css';
@@ -138,30 +137,38 @@ export default function EnhancementPicker() {
   );
 }
 
+function getIconPath(category: EnhancementCategory, isSet: boolean): string {
+  if (isSet) return `/icons/enhancements/io_${category}.png`;
+  return `/icons/enhancements/${category}.webp`;
+}
+
 function EnhItemButton({ enhancement, onSelect }: { enhancement: Enhancement; onSelect: (e: Enhancement) => void }) {
   const primaryCat = enhancement.categories[0];
-  const color = categoryColors[primaryCat] || '#888';
+  const isSet = enhancement.origin === 'set';
+  const iconSrc = getIconPath(primaryCat, isSet);
+  const fallbackSrc = `/icons/enhancements/${primaryCat}.webp`;
 
   return (
     <div className={styles.enhItem} onClick={() => onSelect(enhancement)}>
-      <div
-        style={{
-          width: 18,
-          height: 18,
-          borderRadius: 3,
-          backgroundColor: color,
-          flexShrink: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '0.45rem',
-          fontWeight: 700,
-          color: '#fff',
-          textShadow: '0 1px 2px rgba(0,0,0,0.8)',
+      <img
+        src={iconSrc}
+        alt={enhancement.name}
+        onError={(e) => {
+          const target = e.currentTarget;
+          if (!target.dataset.fallback) {
+            target.dataset.fallback = '1';
+            target.src = fallbackSrc;
+          }
         }}
-      >
-        {categoryLabels[primaryCat]?.slice(0, 2)}
-      </div>
+        style={{
+          width: 24,
+          height: 24,
+          borderRadius: '50%',
+          objectFit: 'cover',
+          flexShrink: 0,
+        }}
+        draggable={false}
+      />
       <div>
         <div className={styles.enhName}>{enhancement.name}</div>
         <div className={styles.enhCategories}>

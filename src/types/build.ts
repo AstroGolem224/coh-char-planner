@@ -10,6 +10,7 @@ export interface PowerPick {
   powersetId: string;
   levelPicked: number;
   slottedEnhancements: SlottedEnhancement[];
+  isActive?: boolean;
 }
 
 export interface SlotAssignment {

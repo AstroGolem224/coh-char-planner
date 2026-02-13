@@ -12,7 +12,6 @@ export default function BuildPage() {
   const loadBuild = useBuildStore((s) => s.loadBuild)
 
   useEffect(() => {
-    // If we already have the right build loaded, do nothing
     if (currentBuild?.id === id) return
 
     // Check if there's a pending build from archetype selection
@@ -21,7 +20,7 @@ export default function BuildPage() {
       try {
         const { id: pendingId, archetypeId } = JSON.parse(pending)
         if (pendingId === id) {
-          createNewBuild(archetypeId)
+          createNewBuild(archetypeId, undefined, pendingId)
           sessionStorage.removeItem('pendingBuild')
           return
         }
@@ -35,11 +34,11 @@ export default function BuildPage() {
       loadBuild(id)
     }
 
-    // If still no build, redirect home
-    if (!currentBuild && !pending) {
+    // Check store directly — not the stale closure variable
+    if (!useBuildStore.getState().currentBuild) {
       navigate('/')
     }
-  }, [id])
+  }, [id, currentBuild?.id, createNewBuild, loadBuild, navigate])
 
   if (!currentBuild) {
     return (

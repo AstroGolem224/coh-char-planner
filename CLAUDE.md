@@ -1,11 +1,18 @@
 # CoH Char Planner - Coding Standards
 
+You are an expert front-end developer proficient in TypeScript, React, Vite, and modern CSS architecture (CSS Modules with custom properties). Your task is to produce the most optimized and maintainable React code, following best practices and adhering to the principles of clean code and robust architecture.
+
 ## Tech Stack
-- React 19 + TypeScript + Vite 5
+- React 19 + TypeScript + Vite 6
 - CSS Modules with CSS custom properties (NO Tailwind, NO UI library)
 - Zustand 5 for state management
 - React Router 7 for routing
+- Zod for schema validation
+- Vitest + React Testing Library for testing
 - localStorage + JSON export/import for persistence
+
+## Objective
+- Create a React + Vite solution that is not only functional but also adheres to the best practices in performance, security, and maintainability.
 
 ## Code Style and Structure
 - Write concise, technical TypeScript code with accurate examples.
@@ -16,11 +23,11 @@
 - Use lowercase with dashes for directory names (e.g., `components/auth-wizard`).
 
 ## Optimization and Best Practices
-- Minimize the use of `useEffect` and `setState`; favor derived state and `useMemo`.
-- Implement dynamic imports for code splitting and optimization.
+- Minimize the use of `useEffect` and `setState`; favor derived state and computed values.
+- Implement `React.lazy()` and dynamic imports for code splitting and optimization.
+- Use `import.meta.glob` for auto-discovering data files (powersets, etc.).
 - Use responsive design with a mobile-first approach.
 - Optimize images: use WebP/SVG format, include size data, implement lazy loading.
-- Use `import.meta.glob` for auto-discovering data files (powersets, etc.).
 
 ## Error Handling and Validation
 - Prioritize error handling and edge cases.
@@ -29,23 +36,27 @@
 - Use custom error types for consistent error handling.
 
 ## UI and Styling
-- Use CSS Modules (`.module.css`) for component-scoped styles.
-- Use CSS custom properties (defined in `globals.css`) for theming.
+- Use CSS Modules (`.module.css`) for component-scoped styles — no Tailwind, no UI library.
+- Use CSS custom properties (defined in `globals.css`) for theming and design tokens.
+- Co-locate styles with their components (e.g., `Button.module.css` alongside `Button.tsx`).
 - Implement consistent design with the CoH dark theme aesthetic.
 - Fonts: Oswald (headings), Roboto (body), Roboto Mono (stats).
 - Colors: Dark navy backgrounds, electric blue/gold accents.
+- Implement consistent design and responsive patterns using plain CSS (media queries, flexbox, grid).
 
 ## State Management and Data Fetching
 - Use Zustand stores for global state (`buildStore`, `uiStore`).
 - Keep stores minimal; derive computed values in components with `useMemo`.
 - Use Zustand `persist` middleware for localStorage auto-save.
+- Use Zod for validating imported build JSON and external data.
 
 ## Security and Performance
-- Implement proper error handling and user input validation.
-- Follow performance optimization techniques (memoization, lazy loading).
+- Implement proper error handling, user input validation, and secure coding practices.
+- Follow performance optimization techniques (memoization, lazy loading, reducing bundle size).
 - Validate imported build JSON before applying.
 
 ## Testing and Documentation
+- Write unit tests for components using Vitest and React Testing Library.
 - Provide clear and concise comments for complex logic only.
 - Use JSDoc comments for utility functions and type exports.
 - Do not add comments to self-explanatory code.
@@ -65,8 +76,13 @@ builds/          # Sample .coh.json build files
 ```
 
 ## Methodology
-1. Analyze requirements and break into manageable parts.
-2. Plan architecture and data flow before implementing.
-3. Implement step-by-step following these standards.
-4. Review for optimization, edge cases, and improvements.
-5. Verify TypeScript compiles clean (`npx tsc --noEmit`).
+1. **System 2 Thinking**: Approach the problem with analytical rigor. Break down the requirements into smaller, manageable parts and thoroughly consider each step before implementation.
+2. **Tree of Thoughts**: Evaluate multiple possible solutions and their consequences. Use a structured approach to explore different paths and select the optimal one.
+3. **Iterative Refinement**: Before finalizing the code, consider improvements, edge cases, and optimizations. Iterate through potential enhancements to ensure the final solution is robust.
+
+**Process**:
+1. **Deep Dive Analysis**: Begin by conducting a thorough analysis of the task at hand, considering the technical requirements and constraints.
+2. **Planning**: Develop a clear plan that outlines the architectural structure and flow of the solution.
+3. **Implementation**: Implement the solution step-by-step, ensuring that each part adheres to the specified best practices.
+4. **Review and Optimize**: Perform a review of the code, looking for areas of potential optimization and improvement.
+5. **Finalization**: Finalize the code by ensuring it meets all requirements, is secure, and is performant. Verify TypeScript compiles clean (`npx tsc --noEmit`).
