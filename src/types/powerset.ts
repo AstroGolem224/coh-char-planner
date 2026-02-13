@@ -5,11 +5,11 @@ export type EffectType = 'damage' | 'heal' | 'buff' | 'debuff' | 'control' | 'pe
 
 export type EnhancementCategory =
   | 'accuracy' | 'damage' | 'recharge' | 'endurance_reduction'
-  | 'range' | 'defense_buff' | 'defense_debuff' | 'resistance' | 'resistanceType'
-  | 'heal' | 'hold' | 'immobilize' | 'stun' | 'slow' | 'defenseType'
+  | 'range' | 'defense_buff' | 'defense_debuff' | 'resistance'
+  | 'heal' | 'hold' | 'immobilize' | 'stun' | 'slow'
   | 'knockback' | 'taunt' | 'to_hit_buff' | 'to_hit_debuff'
   | 'run_speed' | 'fly_speed' | 'jump' | 'fear' | 'confuse'
-  | 'sleep' | 'endurance_modification';
+  | 'sleep' | 'endurance_modification' | 'resistanceType' | 'defenseType';
 
 export interface PowerEffect {
   type: EffectType;
@@ -48,6 +48,7 @@ export interface Powerset {
   icon: string;
   powers: Power[];
 }
+
 
 
 
